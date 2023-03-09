@@ -1,0 +1,7 @@
+ makeChange←{
+     1=≢⍺:((0=1|⍵÷⍺),1)⍴⍵
+     biggest_denom←⊃¯1↑⍺
+     max_amount_biggest_denom←⌊⍵÷biggest_denom
+     tmp←((⊂¯1↓⍺)∇¨⍵-biggest_denom×0,⍳max_amount_biggest_denom)
+     ⊃⍪/tmp,¨(0,⍳max_amount_biggest_denom)
+ }
