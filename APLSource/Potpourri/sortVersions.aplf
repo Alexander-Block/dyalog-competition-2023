@@ -1,0 +1,6 @@
+ sortVersions←{
+     1=≡⍵:,⊂⍵
+     split_versions←{(~⍵∊'-.')⊆⍵}¨⍵
+     numeric_versions←({2⊃⎕VFI⍵}¨@3 4 5)¨split_versions
+     ⍵[⍋numeric_versions]
+ }
