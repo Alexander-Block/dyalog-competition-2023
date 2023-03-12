@@ -1,0 +1,15 @@
+ readFASTA←{
+
+     parseTaxon←{
+         title←1↓{(¯1+⍵⍳' ')↑⍵}1⊃⍵
+         taxon←⊃,/1↓⍵
+         title taxon
+     }
+
+     content←1⊃⎕NGET ⍵ 1
+     split_content←({'>'=1⊃⍵}¨content)⊂content
+
+     parseTaxon¨split_content
+
+     STOP
+ }
