@@ -1,0 +1,26 @@
+ prot_check←{
+     codons←'UUU' 'UUC' 'UUA' 'UUG' 'UCU' 'UCC' 'UCA' 'UCG'
+     codons,←'UAU' 'UAC' 'UAA' 'UAG' 'UGU' 'UGC' 'UGA' 'UGG'
+     codons,←'CUU' 'CUC' 'CUA' 'CUG' 'CCU' 'CCC' 'CCA' 'CCG'
+     codons,←'CAU' 'CAC' 'CAA' 'CAG' 'CGU' 'CGC' 'CGA' 'CGG'
+     codons,←'AUU' 'AUC' 'AUA' 'AUG' 'ACU' 'ACC' 'ACA' 'ACG'
+     codons,←'AAU' 'AAC' 'AAA' 'AAG' 'AGU' 'AGC' 'AGA' 'AGG'
+     codons,←'GUU' 'GUC' 'GUA' 'GUG' 'GCU' 'GCC' 'GCA' 'GCG'
+     codons,←'GAU' 'GAC' 'GAA' 'GAG' 'GGU' 'GGC' 'GGA' 'GGG'
+
+     amino_acids←'F' 'F' 'L' 'L' 'S' 'S' 'S' 'S'
+     amino_acids,←'Y' 'Y' 'Stop' 'Stop' 'C' 'C' 'Stop' 'W'
+     amino_acids,←'L' 'L' 'L' 'L' 'P' 'P' 'P' 'P'
+     amino_acids,←'H' 'H' 'Q' 'Q' 'R' 'R' 'R' 'R'
+     amino_acids,←'I' 'I' 'I' 'M' 'T' 'T' 'T' 'T'
+     amino_acids,←'N' 'N' 'K' 'K' 'S' 'S' 'R' 'R'
+     amino_acids,←'V' 'V' 'V' 'V' 'A' 'A' 'A' 'A'
+     amino_acids,←'D' 'D' 'E' 'E' 'G' 'G' 'G' 'G'
+
+     codons_in_code←((≢⍵)↑⊃,/(⍳⌊(≢⍵)÷3)+⊂3⍴0)⊆⍵
+     naive_transcription←amino_acids[codons⍳codons_in_code]
+     stop_index←naive_transcription⍳⊂'Stop'
+     has_stop←stop_index<≢naive_transcription
+     protein←{(¯1+stop_index)↑⍵}naive_transcription
+     protein has_stop
+ }

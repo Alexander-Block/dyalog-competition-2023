@@ -1,0 +1,5 @@
+ orf←{
+     dna_string←2⊃1⊃readFASTA ⍵
+     length←≢dna_string
+     ∪{('M'=1⊃¨⍵)/⍵}{(0<≢¨⍵)/⍵}{(2⊃¨⍵)/(1⊃¨⍵)}prot_check¨rna¨((0,⍳length)↓¨⊂revc dna_string),(0,⍳length)↓¨⊂dna_string
+ }
