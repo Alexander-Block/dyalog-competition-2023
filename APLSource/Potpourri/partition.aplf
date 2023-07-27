@@ -1,12 +1,15 @@
  partition←{
-
-     2>|≡⍺:(,⊂⍺)∇⍵
-     1=≢⍺: (⍺,(⊂,(≢1⊃⍺)⍴1),(⊂,(≢⍴⍵)⍴1))∇⍵
-     2=≢⍺: (⍺,⊂(≢⍴⍵)⍴1)∇⍵
-     (shape movement first)←⍺
-     ⍵<⍥(≢⍴)shape:0⍴⊂shape⍴0
-     tmp←({⊂⍺ ⍵}⌺(⌽1+(≢⍴⍵)↑¯1+⌽shape))⍵
-     tmp2←,tmp
-     res←(⊂shape)⍴¨(∧/¨0=1⊃¨tmp2)/2⊃¨tmp2
-     res
+     spec←,⊆⍺
+     movement_default←(≢1⊃spec)⍴1
+     first_default←(≢⍴⍵)⍴1
+     (shape movement first)←⌽¯3↑first_default movement_default,⌽spec
+     array←(¯1+first)↓⍵
+     shape←⌽1+(≢⍴array)↑¯1+⌽shape
+     movement←⌽1+(≢⍴array)↑¯1+⌽movement
+     tmp←({⊂⍺↓⍵}⌺shape)array
+     i_keep←(⍸(⊂shape)≡¨⍴¨tmp)
+     i_start←⊃⌊/i_keep
+     i_final←(∧/¨0=(⊂movement)|(i_keep-⊂i_start))/i_keep
+     0∊⍴i_final:0⍴⊂shape⍴array
+     ⊃¨i_final⌷¨⊂tmp
  }
