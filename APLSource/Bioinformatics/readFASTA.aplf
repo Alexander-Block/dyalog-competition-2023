@@ -10,6 +10,4 @@
      split_content←({'>'=1⊃⍵}¨content)⊂content
 
      parseTaxon¨split_content
-
-     STOP
  }
