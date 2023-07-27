@@ -1,5 +1,17 @@
  sortVersions←{
+     ⍝ ⍵ ←→ character vector representing a single package identifier
+     ⍝      or a vector of character vectors each representing a package identifier.
+     ⍝ returns a vector of character vectors of the package identifiers sorted by version number.
+
+
+     ⍝ If the right argument is a simple character vector representing a single package identifier,
+     ⍝ the result is a 1-element vector of the enclosed right argument.
      1=≡⍵:,⊂⍵
+
+     ⍝ Otherwise we split the version names into their components as separated by '-' and '.'
+     ⍝ and convert the numeric part of the package identifier (i.e. the components of the version number)
+     ⍝ into numbers. We can then directly use these split version names to sort the package identifiers in ⍵,
+     ⍝ since the components of the version number are already in descending order of significance.
      split_versions←{(~⍵∊'-.')⊆⍵}¨⍵
      numeric_versions←({2⊃⎕VFI⍵}¨@3 4 5)¨split_versions
      ⍵[⍋numeric_versions]
