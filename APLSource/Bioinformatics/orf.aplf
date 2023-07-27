@@ -1,8 +1,19 @@
  orf←{
+     ⍝ ⍵ ←→ name of a file containing a single DNA string in FASTA format
+     ⍝ returns a vector of the distinct protein strings (character vectors) that can be translated from the ORFs of the DNA string
+
+     ⍝ First we read an parse the file. The relevant DNA string is the first (and by assumption only) resulting string.
      dna_string←1 2⊃readFASTA ⍵
+
      length←≢dna_string
+     ⍝ Possible reading frames are subvectors of any length of the DNA string or its reverse complement
      possible_reading_frames←((0,⍳length)↓¨⊂revc dna_string),(0,⍳length)↓¨⊂dna_string
+     ⍝ However, an actual open reading frame must start with the DNA codon 'ATG'
      frames_with_start_codon←{((3↑¨possible_reading_frames)∊⊂'ATG')/⍵}possible_reading_frames
-     (proteins was_stopped)←↓[1]↑prot_check¨rna¨frames_with_start_codon
-     ∪was_stopped/proteins
+     ⍝ Finally, an actual open reading frame must end with a stop codon to which the second element
+     ⍝ of the return value of prot_check bears witness.
+     (proteins were_stopped)←↓[1]↑prot_check¨rna¨frames_with_start_codon
+     ⍝ Finally we do not care about the order in the return value, but we have to take care that we return every protein
+     ⍝ string only once.
+     ∪were_stopped/proteins
  }

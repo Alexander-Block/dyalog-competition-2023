@@ -1,3 +1,5 @@
  rna←{
+     ⍝ ⍵ ←→ character vector or scalar representing a DNA string
+     ⍝ returns a character array of same shape as ⍵ representing the transcribed RNA string
      'U'@('T'∘=)⍵
  }

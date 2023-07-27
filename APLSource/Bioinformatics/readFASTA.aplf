@@ -1,12 +1,27 @@
  readFASTA←{
+     ⍝ ⍵ ←→ character vector representing the name of a file containing data in FASTA format
+     ⍝ returns a vector of 2-element vectors for each genetic string contained in the file
+     ⍝ in the order in which they appear in the file. Each subvector will contain
+     ⍝ 1. the identifier for the genetic string
+     ⍝ 2. the genetic string itself
 
+     ⍝ We define a helper function to parse a single taxon
      parseTaxon←{
+         ⍝ ⍵ ←→ character vector representing a single genetic string definition according to FASTA
+         ⍝ returns a 2-element vector (title taxon) with:
+         ⍝ title ←→ identifier for the genetic string
+         ⍝ taxon ←→ the genetic string itself
+
+         ⍝ The title is everything in the first line after the first character (which must be '>' according to FASTA)
+         ⍝ and before the first space symbol (if any)
          title←1↓{(¯1+⍵⍳' ')↑⍵}1⊃⍵
+         ⍝ The genetic string consists of a concatenation of everything in the lines after the first line
          taxon←⊃,/1↓⍵
          title taxon
      }
 
      content←1⊃⎕NGET ⍵ 1
+     ⍝ A '>' character signifies the start of a new genetic string definition according to FASTA
      split_content←({'>'=1⊃⍵}¨content)⊂content
 
      parseTaxon¨split_content

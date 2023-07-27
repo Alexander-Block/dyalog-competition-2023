@@ -1,3 +1,7 @@
  prot←{
+     ⍝ ⍵ ←→ non-empty character vector representing an RNA string
+     ⍝ returns a character vector representing the protein string made by
+     ⍝ translating the codons in ⍵ (possibly truncated to make its length
+     ⍝ a multiple of 3) into their corresponding amino acids
      1⊃prot_check ⍵
  }

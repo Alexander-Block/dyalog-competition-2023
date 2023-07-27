@@ -1,4 +1,15 @@
  prot_check←{
+     ⍝ ⍵ ←→ non-empty character vector representing an RNA string
+     ⍝ returns a vector (protein has_stop) of length 2;
+     ⍝ protein ←→ character vector representing the protein string made by
+     ⍝            translating the codons in ⍵ into their corresponding amino
+     ⍝            acids, stopped by the first stop signal encountered
+     ⍝ has_stop ←→ boolean value signifying if the amino acid translation
+     ⍝             was stopped by a stop signal (as opposed by encountering
+     ⍝             the end of the RNA string)
+
+     ⍝ First we define a vector of codons and a vector of corresponding amino acids
+     ⍝ as shown in the RNA codon table
      codons←'UUU' 'UUC' 'UUA' 'UUG' 'UCU' 'UCC' 'UCA' 'UCG'
      codons,←'UAU' 'UAC' 'UAA' 'UAG' 'UGU' 'UGC' 'UGA' 'UGG'
      codons,←'CUU' 'CUC' 'CUA' 'CUG' 'CCU' 'CCC' 'CCA' 'CCG'
@@ -17,10 +28,18 @@
      amino_acids,←'V' 'V' 'V' 'V' 'A' 'A' 'A' 'A'
      amino_acids,←'D' 'D' 'E' 'E' 'G' 'G' 'G' 'G'
 
+     ⍝ We split the RNA string into its constituent codons. If its
+     ⍝ length is not a multiple of 3, the last 1 or 2 characters are
+     ⍝ truncated to make its length a multiple of 3
      codons_in_code←((≢⍵)↑⊃,/(⍳⌊(≢⍵)÷3)+⊂3⍴0)⊆⍵
+
+     ⍝ Once we have a list of codons we can map every codon
+     ⍝ to an amino acid. To obtain the resulting protein, we
+     ⍝ have to take into account that a stop signal ends the
+     ⍝ transcription.
      naive_transcription←amino_acids[codons⍳codons_in_code]
      stop_index←naive_transcription⍳⊂'Stop'
      has_stop←stop_index<≢naive_transcription
-     protein←{(¯1+stop_index)↑⍵}naive_transcription
+     protein←(¯1+stop_index)↑naive_transcription
      protein has_stop
  }

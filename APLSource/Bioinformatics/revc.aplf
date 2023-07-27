@@ -1,3 +1,5 @@
  revc←{
+     ⍝ ⍵ ←→ character vector or scalar representing a DNA string
+     ⍝ returns a character array of the same shape as ⍵ representing the reverse complement of ⍵
      ⌽'TACG'['ATGC'⍳⍵]
  }
