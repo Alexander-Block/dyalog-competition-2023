@@ -1,7 +1,20 @@
  makeChange←{
+     ⍝ ⍺ ←→ ascendingly-sorted integer vector representing a set of denominations
+     ⍝ ⍵ ←→ single integer right argument representing an amount
+     ⍝ returns an integer matrix with (≢denom) columns where each row represents a
+     ⍝ unique combination of elements of ⍺ that total ⍵.
+
+     ⍝ If the set of denominations has length 1, there is either exactly one solution
+     ⍝ (if ⍵ is dividable by the single denomination) or none.
      1=≢⍺:((0=1|⍵÷⍺),1)⍴⍵
+
+     ⍝ Otherwise we determine the biggest amount of the biggest denomination that stays
+     ⍝ below or equal to ⍵. Using this we recursively determine for every amount of the biggest
+     ⍝ denomination below this threshold how many unique combination of elements of ¯1↓⍺ there
+     ⍝ are that total a correspondingly lowered amount.
+     ⍝ We use these results to build up the full resulting matrix.
      biggest_denom←⊃¯1↑⍺
      max_amount_biggest_denom←⌊⍵÷biggest_denom
-     tmp←((⊂¯1↓⍺)∇¨⍵-biggest_denom×0,⍳max_amount_biggest_denom)
-     ⊃⍪/tmp,¨(0,⍳max_amount_biggest_denom)
+     partial_results←((⊂¯1↓⍺)∇¨⍵-biggest_denom×0,⍳max_amount_biggest_denom)
+     ⊃⍪/partial_results,¨(0,⍳max_amount_biggest_denom)
  }
