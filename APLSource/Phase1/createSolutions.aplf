@@ -1,0 +1,12 @@
+createSolutions
+
+elimination←{(⍵=⌈\⍵)/⍵}
+reverse_find←⌽⍷⍥⌽
+caesar_salad←{⎕io←0⋄ (' ',⎕A)[27|⍺+(' ',⎕A)⍳⍵]}
+newer_version←{ ×+/100 10 1 × (⍵ < ⍺) - (⍺ < ⍵)}
+risk←{len←⍺⌊⍥≢⍵⋄def_lost←+/(len↑⍵)<(len↑⍺)⋄(len-def_lost) def_lost}
+key_value←{↑(2⊃⍺){(~⍺=⍵)⊆⍵}¨(~(1⊃⍺)=⍵)⊆⍵}
+rational←(,÷∨)∘1
+critical←{⎕IO←0 ⋄ 3↑⊃1 ¯1 ⎕DT (¯1 1 ⎕DT⊂⍺)+⌊/{(0∊¨(⊂644 759 924)|⍵)/⍵}(⍳924)+-/¯1 1⎕DT ⍵ ⍺}
+pair_flip←{⊃,/⌽¨(2|⍳¯1↑⍴⍵)⊂⍵}
+partition←{⍺↑(¯1+⍺){({⍵~' '}¨⍺↑⍵),(,/⍺↓⍵)}' '({1,⍺=⍵}⊂⊢)⍵}
